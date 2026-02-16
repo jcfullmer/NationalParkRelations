@@ -33,8 +33,8 @@ func main() {
 	}
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET  /", conf.HandlerRoot)
-
+	mux.HandleFunc("GET  /park", conf.HandlerGetParks)
+	mux.HandleFunc("GET /park/state/{state}", conf.HandlerStateSearch)
 	log.Printf("Listening on port %s", conf.Port)
 	err = http.ListenAndServe(conf.Port, mux)
 	if err != nil {
