@@ -45,13 +45,14 @@ func (conf Config) HandlerGetParks(w http.ResponseWriter, r *http.Request) {
 	parks, err := conf.db.GetParks(context.Background(), GetParkParams)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Error getting parks", err)
+		return
 	}
 	respondWithJSON(w, http.StatusAccepted, parks)
 	// w.Write([]byte("This is the root."))
 }
 
 func (conf Config) HandlerStateSearch(w http.ResponseWriter, r *http.Request) {
-	stateCode := r.PathValue("state")
+	stateCode := r.URL.Query().Get("state_code")
 	urlparams := GetURLParameters(r)
 	args := database.GetParkByStateParams{
 		StateCode: strings.ToUpper(stateCode),
@@ -60,6 +61,7 @@ func (conf Config) HandlerStateSearch(w http.ResponseWriter, r *http.Request) {
 	parks, err := conf.db.GetParkByState(context.Background(), args)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Error getting Request", err)
+		return
 	}
 	respondWithJSON(w, http.StatusAccepted, parks)
 }
