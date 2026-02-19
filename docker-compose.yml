@@ -1,0 +1,15 @@
+services:
+  nps-server:
+    # 1. Build using the Dockerfile in the current directory
+    build: .
+
+    # 2. Map your local port 8080 to the container's 8080
+    ports:
+      - "8069:8080"
+
+    # 3. Pull variables from the .env file and inject them into the container
+    env_file:
+      - .env
+
+    # 4. Optional: Ensure the container restarts if it crashes
+    restart: always

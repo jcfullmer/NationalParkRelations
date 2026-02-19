@@ -20,9 +20,11 @@ func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading environment: %s", err)
-		os.Exit(2)
 	}
 	dbURL := os.Getenv("DB_URL")
+	if dbURL == "" {
+		log.Fatal("DB_URL environment variable is not set.")
+	}
 	db, err := ConnectToDBAndGetQuery(dbURL)
 	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
